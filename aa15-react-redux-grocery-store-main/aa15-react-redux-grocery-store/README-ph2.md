@@ -10,7 +10,7 @@ First, you need to create space in the Redux store for the produce. To do this,
 you will add a key in the Redux store for handling the produce information. This
 key will be the produce slice of state.
 
-In your store file (__src/store/store.js__), add a key of `produce` to the
+In your store file (**src/store/store.js**), add a key of `produce` to the
 `rootReducer` with the value of `produceReducer`:
 
 ```js
@@ -18,7 +18,7 @@ In your store file (__src/store/store.js__), add a key of `produce` to the
 
 // ...
 const rootReducer = combineReducers({
-  produce: produceReducer
+  produce: produceReducer,
 });
 ```
 
@@ -26,7 +26,7 @@ The `produceReducer` is responsible for handling the produce information in the
 store, or the produce slice of state.
 
 Now you need to define the `produceReducer`. Create a file in the `store`
-folder called __produce.js__. Define a function called `produceReducer` with
+folder called **produce.js**. Define a function called `produceReducer` with
 `state` and `action` as parameters. The `state` should default to an empty
 object. Add a `switch/case` statement on `action.type` inside of the function
 and return the state as the `default` case. Export the `produceReducer` as
@@ -51,7 +51,7 @@ could be an array, a boolean, etc.
 The produce slice of state should be an object with produce id's as keys. The
 values should be objects of produce information.
 
-Import the `produceReducer` into the store file, __store/store.js__.
+Import the `produceReducer` into the store file, **store/store.js**.
 
 ### Test the reducer
 
@@ -62,18 +62,18 @@ an object with a key of produce and an empty object as the value.
 
 ## Populate the produce slice of state
 
-You will use the mock data in the __src/mockData/produce.json__ file to add
+You will use the mock data in the **src/mockData/produce.json** file to add
 produce to the produce slice of state. To populate the produce slice of state,
 you need to trigger a change to the Redux store state. This can only be done by
 dispatching an action.
 
-In the __store/produce.js__ file, create and export an action creator called
+In the **store/produce.js** file, create and export an action creator called
 `populateProduce`. This function should return an object with a unique `type`
 key. Create a constant called `POPULATE` and set it to a string literal of
 `produce/POPULATE`. Set the key of `type` in the return of `populateProduce` to
 this constant.
 
-Import __produce.json__ as `produceData`. Set a key of `produce` in the return
+Import **produce.json** as `produceData`. Set a key of `produce` in the return
 of `populateProduce` to `produceData`. The key of `produce` is a payload key.
 
 If you try dispatching the `populateProduce` action right now, the Redux store
@@ -81,8 +81,8 @@ state will not change. Whenever you create a new action type, you need to add a
 case for it in reducer that handles the slice of state that needs to be updated.
 
 In the `produceReducer` add a case for the `action.type` of `POPULATE`. This
-case should turn the `action.produce` array into an object and return the
-object. `action.produce` is an array of produce data objects. The object
+case should turn the `action.produce` array into an object and return the object.
+`action.produce` is an array of produce data objects. The object
 returned should have keys set to the id's of the produce data objects with their
 values as the respective produce data objects.
 
@@ -90,11 +90,11 @@ The `action.produce` array should look something like this:
 
 ```js
 [
-  { id: 1, name: "Longos - Greek Salad", liked: false },
-  { id: 2, name: "Juice - Lagoon Mango", liked: false },
-  { id: 3, name: "Lamb - Whole, Frozen", liked: false },
+  { id: 1, name: 'Longos - Greek Salad', liked: false },
+  { id: 2, name: 'Juice - Lagoon Mango', liked: false },
+  { id: 3, name: 'Lamb - Whole, Frozen', liked: false },
   // ...
-]
+];
 ```
 
 The object created from the array should look something like this:
@@ -113,14 +113,14 @@ Try attempting this before looking below.
 ```js
 // src/store/produce.js
 
-import produceData from '../mockData/produce.json'
+import produceData from '../mockData/produce.json';
 
 const POPULATE = 'produce/POPULATE';
 
 export const populateProduce = () => {
   return {
     type: POPULATE,
-    produce: produceData
+    produce: produceData,
   };
 };
 
@@ -128,7 +128,7 @@ export default function produceReducer(state = {}, action) {
   switch (action.type) {
     case POPULATE: {
       const newState = {};
-      action.produce.forEach(produce => {
+      action.produce.forEach((produce) => {
         newState[produce.id] = produce;
       });
       return newState;
@@ -140,7 +140,7 @@ export default function produceReducer(state = {}, action) {
 ```
 
 > **Note:** Your code will still work if you do not include the curly braces (`{
-> }`) around the `POPULATE` case, but your linter will object because you are
+}`) around the `POPULATE` case, but your linter will object because you are
 > declaring a variable inside of a case statement ([`no-case-declarations`]).
 > Such declarations can be problematical because they are visible throughout the
 > `switch`, but they are only initialized if that particular case is triggered.
@@ -160,9 +160,9 @@ it to the `window` just like you did with the `store`.
 ```js
 // src/main.jsx
 
-import { populateProduce } from './store/produce'
+import { populateProduce } from './store/produce';
 // ...
-if (import.meta.env.MODE !== "production") {
+if (import.meta.env.MODE !== 'production') {
   window.store = store;
   window.populateProduce = populateProduce;
 }
@@ -220,8 +220,8 @@ The relevant parts of your `App` component should now look something like this:
 ```js
 // src/App.jsx
 
-import { useDispatch } from 'react-redux'
-import { populateProduce } from './store/produce'
+import { useDispatch } from 'react-redux';
+import { populateProduce } from './store/produce';
 
 function App() {
   const dispatch = useDispatch();
@@ -258,7 +258,7 @@ set the `produce` variable to the return of `useSelector` and pass in a function
 that returns the `produce` slice of state from the updated state:
 
 ```js
-const produce = useSelector(state => state.produce);
+const produce = useSelector((state) => state.produce);
 ```
 
 The `ProduceList` component will turn the products into an array of
