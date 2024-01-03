@@ -28,7 +28,7 @@ The `Cart`, `ProduceList`, and `ProduceDetails` are the components you need to
 connect to the Redux store. Take a look at the code there to familiarize
 yourself with it.
 
-__src/mockData/produce.json__ provides the mock data that you will use to
+**src/mockData/produce.json** provides the mock data that you will use to
 populate the Redux store. The file has a JSON array of objects. Each object has
 the following structure:
 
@@ -61,8 +61,8 @@ component tree).
 
 First thing you need to do is set up and configure the Redux store.
 
-Create a folder called __store__ inside of __src__. Inside of that folder,
-create a file called __store.js__. (You can also add an __index.js__ to help
+Create a folder called **store** inside of **src**. Inside of that folder,
+create a file called **store.js**. (You can also add an **index.js** to help
 with exporting if you want.) In this file, you will define the root reducer and
 a function that will return a Redux store.
 
@@ -91,9 +91,7 @@ with an empty object for now.
 // src/store/store.js
 
 // ...
-const rootReducer = combineReducers({
-
-});
+const rootReducer = combineReducers({});
 ```
 
 Now, you are going to create a store enhancer that will be set only when your
@@ -113,10 +111,10 @@ Set the `enhancer` variable when in development to use these enhancers like so:
 // ...
 let enhancer;
 
-if (import.meta.env.MODE !== "production") {
-  const logger = (await import("redux-logger")).default;
+if (import.meta.env.MODE !== 'production') {
+  const logger = (await import('redux-logger')).default;
   const composeEnhancers =
-    typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
       ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true })
       : compose;
   enhancer = composeEnhancers(applyMiddleware(logger));
@@ -163,7 +161,7 @@ export default configureStore;
 
 Now, you need to wrap the React application with the Redux store provider.
 
-Import the `configureStore` function into the entry file, __src/main.jsx__.
+Import the `configureStore` function into the entry file, **src/main.jsx**.
 Import the `Provider` component from `react-redux`.
 
 Initialize a variable called `store` and set it to the return of
@@ -194,7 +192,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <App />
     </Provider>
   </React.StrictMode>
-)
+);
 ```
 
 ### Test your setup
@@ -215,7 +213,7 @@ development** for testing purposes.
 // src/main.jsx
 
 // ...
-if (import.meta.env.MODE !== "production") {
+if (import.meta.env.MODE !== 'production') {
   window.store = store;
 }
 ```
